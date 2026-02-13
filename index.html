@@ -8,7 +8,7 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
 
     <style>
-        /* 2. 전체 레이아웃 설정 */
+        /* 2. 전체 레이아웃 및 배경 이미지 설정 */
         body {
             margin: 0;
             padding: 0;
@@ -16,27 +16,35 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100dvh;
+            min-height: 100dvh; /* 모바일 브라우저 대응 꽉 찬 높이 */
             color: white;
             text-align: center;
             
-            /* 디자인 디테일 */
+            /* 디자이너를 위한 폰트 디테일 */
             font-family: "Pretendard Variable", Pretendard, sans-serif;
-            letter-spacing: -0.02em;
-            background-color: #000; /* 깔끔한 블랙 배경 */
+            letter-spacing: -0.02em; /* 자간 최적화 */
+            
+            /* 배경 이미지 설정 (가로세로 100% 채우기) */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('background.jpg');
+            background-size: cover;         /* 화면 비율에 맞춰 꽉 채움 */
+            background-position: center;    /* 이미지 중앙 정렬 */
+            background-repeat: no-repeat;   /* 반복 방지 */
+            background-attachment: fixed;   /* 스크롤 시 배경 고정 */
+            background-color: #000;         /* 이미지 로딩 전 기본 배경 */
         }
 
-        /* 3. 정보 위계 설정 */
+        /* 3. 타이틀 스타일 (정보 위계 고려) */
         h1 {
             margin-bottom: 30px;
-            font-size: 32px;
+            font-size: 64px;
             font-weight: 700; /* Bold */
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7); /* 배경 위에서 가독성 확보 */
         }
 
-        /* 4. 이미지 컨테이너 (비율 유지) */
+        /* 4. 이미지 컨테이너 (반응형 대응) */
         .image-container {
             width: 90%;
-            height: 60vh; /* 배경 이미지가 없으므로 영역을 조금 더 넓게 잡았습니다 */
+            height: 55vh; /* 화면 높이의 55% 차지 */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -46,28 +54,27 @@
         img {
             max-width: 100%;
             max-height: 100%;
-            object-fit: contain; /* 원본 비율 유지하며 꽉 차게 */
-            border-radius: 12px;
-            /* 배경이 검은색이므로 이미지가 돋보이도록 은은한 글로우 효과 추가 */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); 
+            object-fit: contain; /* 이미지 비율 유지하며 영역 내 최대 크기 */
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         /* 5. 버튼 스타일 */
         button {
             font-family: inherit;
-            font-size: 16px;
+            font-size: 24px;
             font-weight: 600; /* SemiBold */
-            padding: 12px 24px;
+            padding: 14px 28px;
             cursor: pointer;
             background-color: #fff;
             color: #000;
             border: none;
-            border-radius: 8px;
-            transition: opacity 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
         }
 
         button:active {
-            opacity: 0.7;
+            transform: scale(0.95); /* 클릭 시 눌리는 효과 */
+            opacity: 0.8;
         }
     </style>
 </head>
@@ -80,26 +87,29 @@
         <img id="randomImage" alt="Birthday Image">
     </div>
 
-    <button onclick="randomImage()">다른짤 보기</button>
+    <button onclick="randomImage()">이미지가 맘에 안드네</button>
 
     <script>
         // --- 설정 영역 ---
-        const name = "제나"; // 받는 사람 이름 수정
-        const totalImages = 9; // 현재 업로드된 실제 이미지 개수
+        const name = "제나";         // 받는 사람 이름
+        const totalImages = 9;      // 현재 업로드된 이미지 개수 (스크린샷 기준)
         // ----------------
 
         document.getElementById("title").innerText = `${name}의 생일을 축하합니다!`;
 
+        // 이미지 파일명 배열 자동 생성 (img_birthday_01.jpg ~ img_birthday_09.jpg)
         const images = Array.from({ length: totalImages }, (_, i) => {
             const num = String(i + 1).padStart(2, '0');
             return `img_birthday_${num}.jpg`;
         });
 
         function randomImage() {
+            // 06번과 08번 사이의 07번처럼 파일이 비어있으면 이미지가 안 나올 수 있습니다.
             const rand = Math.floor(Math.random() * images.length);
             document.getElementById("randomImage").src = images[rand];
         }
 
+        // 페이지 로드 시 첫 이미지 표시
         randomImage();
     </script>
 

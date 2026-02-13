@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Birthday</title>
+
+<style>
+body {
+  text-align: center;
+  background: black;
+  color: white;
+  font-size: 40px;
+}
+
+img {
+  width: 80%;
+  max-height: 600px;
+  object-fit: cover;
+}
+</style>
+</head>
+
+<body>
+
+<h1 id="title"></h1>
+<img id="randomImage">
+
+<script>
+const name = "OO";
+
+document.getElementById("title").innerText =
+name + "의 생일을 축하합니다";
+
+const images = [
+"img1.jpg",
+"img2.jpg",
+"img3.jpg"
+];
+
+function randomImage(){
+  const rand = Math.floor(Math.random()*images.length);
+  document.getElementById("randomImage").src = images[rand];
+}
+
+randomImage();
+setInterval(randomImage, 2000);
+</script>
+
+</body>
+</html>

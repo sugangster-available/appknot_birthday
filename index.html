@@ -36,4 +36,28 @@ button {
 
 <br>
 
-<butt
+<button onclick="randomImage()">다른짤 보기</button>
+
+<script>
+const name = "OO"; // ← 여기 이름 수정
+
+document.getElementById("title").innerText =
+name + "의 생일을 축하합니다";
+
+// 1부터 50까지 숫자를 생성하고 'img_birthday_01.jpg' 형식으로 변환
+const images = Array.from({ length: 50 }, (_, i) => {
+  const num = String(i + 1).padStart(2, '0'); // 숫자를 2자리 문자열로 (1 -> 01)
+  return `img_birthday_${num}.jpg`;
+});
+
+function randomImage(){
+  const rand = Math.floor(Math.random() * images.length);
+  document.getElementById("randomImage").src = images[rand];
+}
+
+// 첫 화면에도 랜덤 이미지 표시
+randomImage();
+</script>
+
+</body>
+</html>
